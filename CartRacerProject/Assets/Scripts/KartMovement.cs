@@ -3,11 +3,12 @@ using System.Collections;
 
 public class KartMovement : MonoBehaviour
 {
-    private GameObject leftController;
+    private GameObject KartBody;
 
     private float verticalInput;
     private float currentSteerAngle;
 
+    public GameObject melonCanvas;
     public float motorForce;
     public float maxSteerAngle;
     public HingeJoint steeringWheel;
@@ -30,6 +31,7 @@ public class KartMovement : MonoBehaviour
 
     bool shouldSlow;
     float temp;
+    float temp1;
     float temp2;
     float temp3;
     float slowtime = Mathf.Infinity;
@@ -38,10 +40,12 @@ public class KartMovement : MonoBehaviour
     float steeringRange;
     private void Start()
     {
-        leftController = GameObject.FindGameObjectWithTag("Left");
+        KartBody = GameObject.FindGameObjectWithTag("MainCamera");
         temp = motorForce;
+        temp1 = motorForce / 2;
         temp2 = motorForce / 4;
         temp3 = motorForce * 3;
+        verticalInput = 0;
     }
 
     private void Update()
@@ -49,6 +53,10 @@ public class KartMovement : MonoBehaviour
         HandleMotor();
         Steer();
         UpdateWheels();
+        if (melonCanvas.activeSelf == true)
+        {
+            acctime = 0f;
+        }
         if (slowtime < duration)
         {
             motorForce = temp2;
@@ -78,7 +86,6 @@ public class KartMovement : MonoBehaviour
         {
             if (steeringRange > -1)
             {
-                
                 steeringRange -= 0.003f;
             }
 
@@ -92,19 +99,37 @@ public class KartMovement : MonoBehaviour
         }
         if (Input.GetKey("w"))
         {
-            if (verticalInput < 0.5)
-            {
-                print(verticalInput);
-                verticalInput += 0.0001f;
-            }
+            //if (verticalInput < 0.02)
+            //{
+            //    print(verticalInput);
+            //    verticalInput += 0.0001f;
+            //}
+            verticalInput = 0.01f;
         }
         if (Input.GetKey("s"))
         {
-            if (verticalInput > -0.1)
+            //if (verticalInput > -0.02)
+            //{
+            //    print(verticalInput);
+            //    verticalInput -= 0.0001f;
+            //}
+            verticalInput = -0.01f;
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            if(motorForce < 10000)
             {
-                print(verticalInput);
-                verticalInput -= 0.00005f;
+                motorForce *= 2;
             }
+            
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            if (motorForce > 1000)
+            {
+                motorForce /= 2;
+            }
+            
         }
 
     }
@@ -153,19 +178,16 @@ public class KartMovement : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Box>())
         {
-            if(leftController.GetComponent<SpawnItems>().bananaCanvas.activeSelf == false && leftController.GetComponent<SpawnItems>().melonCanvas.activeSelf == false && leftController.GetComponent<SpawnItems>().ghostCanvas.activeSelf == false)
+            if(KartBody.GetComponent<SpawnItems>().bananaCanvas.activeSelf == false && KartBody.GetComponent<SpawnItems>().melonCanvas.activeSelf == false)
             {
-                int itemNum = Random.Range(0, 3);
+                int itemNum = Random.Range(0, 2);
                 if (itemNum == 0)
                 {
-                    leftController.GetComponent<SpawnItems>().bananaCanvas.SetActive(true);
+                    KartBody.GetComponent<SpawnItems>().bananaCanvas.SetActive(true);
                 }
                 else if (itemNum == 1)
                 {
-                    leftController.GetComponent<SpawnItems>().melonCanvas.SetActive(true);
-                }
-                else {
-                    leftController.GetComponent<SpawnItems>().ghostCanvas.SetActive(true);
+                    KartBody.GetComponent<SpawnItems>().melonCanvas.SetActive(true);
                 }
             }
             Destroy(collision.gameObject);

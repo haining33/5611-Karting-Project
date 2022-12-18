@@ -9,11 +9,7 @@ public class SpawnItems : MonoBehaviour
 
     public GameObject bananaCanvas;
     public GameObject melonCanvas;
-    public GameObject ghostCanvas;
 
-
-    
-    bool ghostActive;
 
 
 
@@ -29,7 +25,6 @@ public class SpawnItems : MonoBehaviour
 
         bananaCanvas.SetActive(false);
         melonCanvas.SetActive(false);
-        ghostCanvas.SetActive(false);
         previousPos = new Vector3(0,0,0);
         currPos = new Vector3(0, 0, 0);
         timeSince = 0;
@@ -49,6 +44,11 @@ public class SpawnItems : MonoBehaviour
             timeSince = 0;
             previousPos = currPos;
         }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            Release();
+        }
+
     }
 
 
@@ -60,30 +60,29 @@ public class SpawnItems : MonoBehaviour
             GameObject a;
             a = Instantiate(banana) as GameObject;
             a.transform.position = this.transform.position;
-            a.GetComponent<Rigidbody>().velocity = (currPos - previousPos) / Time.deltaTime;
-        }
-    }
-
-    void throwMelon()
-    {
-        if (melonCanvas.activeSelf == true)
-        {
-            GameObject a;
-            a = Instantiate(melon) as GameObject;
-            a.transform.position = this.transform.position;
             a.GetComponent<Rigidbody>().velocity = this.transform.forward * 7.0f;
         }
     }
 
-    //void Release(InputAction.CallbackContext context)
+    //void throwMelon()
     //{
-    //    throwBanana();
-    //    throwMelon();
-    //    GhostGrab();
-    //    bananaCanvas.SetActive(false);
-    //    melonCanvas.SetActive(false);
-    //    ghostCanvas.SetActive(false);
+    //    if (melonCanvas.activeSelf == true)
+    //    {
+    //        GameObject a;
+    //        a = Instantiate(melon) as GameObject;
+    //        a.transform.position = this.transform.position;
+    //        //this.transform.forward * 7.0f;
+    //        a.GetComponent<Rigidbody>().velocity = this.transform.forward * 7.0f;
+    //    }
     //}
+
+    void Release()
+    {
+        throwBanana();
+        //throwMelon();
+        bananaCanvas.SetActive(false);
+        melonCanvas.SetActive(false);
+    }
 
 
 }
