@@ -35,7 +35,7 @@ public class KartMovement : MonoBehaviour
     float slowtime = Mathf.Infinity;
     float acctime = Mathf.Infinity;
     float duration = 2;
-
+    float steeringRange;
     private void Start()
     {
         leftController = GameObject.FindGameObjectWithTag("Left");
@@ -47,7 +47,6 @@ public class KartMovement : MonoBehaviour
     private void Update()
     {
         HandleMotor();
-        Lever();
         Steer();
         UpdateWheels();
         if (slowtime < duration)
@@ -75,11 +74,38 @@ public class KartMovement : MonoBehaviour
                 motorForce = temp;
             }
         }
-        //if (Input.GetKey("a"))
-        //{
-        //    steeringTransform.rotation.
-        //}
+        if (Input.GetKey("a"))
+        {
+            if (steeringRange > -1)
+            {
+                
+                steeringRange -= 0.003f;
+            }
 
+        }
+        if (Input.GetKey("d"))
+        {
+            if (steeringRange < 1)
+            {
+                steeringRange += 0.003f;
+            }
+        }
+        if (Input.GetKey("w"))
+        {
+            if (verticalInput < 0.5)
+            {
+                print(verticalInput);
+                verticalInput += 0.0001f;
+            }
+        }
+        if (Input.GetKey("s"))
+        {
+            if (verticalInput > -0.1)
+            {
+                print(verticalInput);
+                verticalInput -= 0.00005f;
+            }
+        }
 
     }
 
@@ -92,19 +118,19 @@ public class KartMovement : MonoBehaviour
 
     private void Steer()
     {
-        float steeringNormal = Mathf.InverseLerp(minValue, maxValue, steeringWheel.transform.localRotation.x);
-        float steeringRange = Mathf.Lerp(1, -1, steeringNormal);
+        //float steeringNormal = Mathf.InverseLerp(minValue, maxValue, steeringWheel.transform.localRotation.x);
+        //steeringRange = Mathf.Lerp(1, -1, steeringNormal);
 
         currentSteerAngle = maxSteerAngle * steeringRange;
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }
-    private void Lever()
-    {
-        float leverNormal = Mathf.InverseLerp(-35, 35, speedLever.transform.localRotation.x);
-        float leverRange = Mathf.Lerp(-1, 1, leverNormal);
-        verticalInput = leverRange;
-    }
+    //private void Lever()
+    //{
+    //    float leverNormal = Mathf.InverseLerp(-35, 35, speedLever.transform.localRotation.x);
+    //    float leverRange = Mathf.Lerp(-1, 1, leverNormal);
+    //    verticalInput = leverRange;
+    //}
 
     private void UpdateWheels()
     {
@@ -142,9 +168,6 @@ public class KartMovement : MonoBehaviour
                     leftController.GetComponent<SpawnItems>().ghostCanvas.SetActive(true);
                 }
             }
-
-
-                
             Destroy(collision.gameObject);
         }
         else if (collision.gameObject.GetComponent<Banana>())

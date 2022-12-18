@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SpawnItems : MonoBehaviour
 {
     public GameObject banana;
     public GameObject melon;
-    public InputActionProperty release;
+
     public GameObject bananaCanvas;
     public GameObject melonCanvas;
     public GameObject ghostCanvas;
@@ -16,7 +15,7 @@ public class SpawnItems : MonoBehaviour
     
     bool ghostActive;
 
-    public GhostGrabber ghost;
+
 
     // Start is called before the first frame update
 
@@ -27,7 +26,7 @@ public class SpawnItems : MonoBehaviour
 
     void Start()
     {
-        release.action.performed += Release;
+
         bananaCanvas.SetActive(false);
         melonCanvas.SetActive(false);
         ghostCanvas.SetActive(false);
@@ -38,7 +37,7 @@ public class SpawnItems : MonoBehaviour
     }
     private void OnDestroy()
     {
-        release.action.performed -= Release;
+        //release.action.performed -= Release;
     }
 
     // Update is called once per frame
@@ -52,11 +51,7 @@ public class SpawnItems : MonoBehaviour
         }
     }
 
-    void GhostGrab() {
-        if (ghostCanvas.activeSelf == true) {
-            ghost.Activate();
-        }
-    }
+
 
     void throwBanana()
     {
@@ -80,15 +75,15 @@ public class SpawnItems : MonoBehaviour
         }
     }
 
-    void Release(InputAction.CallbackContext context)
-    {
-        throwBanana();
-        throwMelon();
-        GhostGrab();
-        bananaCanvas.SetActive(false);
-        melonCanvas.SetActive(false);
-        ghostCanvas.SetActive(false);
-    }
+    //void Release(InputAction.CallbackContext context)
+    //{
+    //    throwBanana();
+    //    throwMelon();
+    //    GhostGrab();
+    //    bananaCanvas.SetActive(false);
+    //    melonCanvas.SetActive(false);
+    //    ghostCanvas.SetActive(false);
+    //}
 
 
 }
