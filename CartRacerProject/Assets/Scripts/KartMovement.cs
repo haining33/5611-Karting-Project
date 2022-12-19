@@ -5,14 +5,12 @@ public class KartMovement : MonoBehaviour
 {
     private GameObject KartBody;
 
-    private float verticalInput;
+    private float direction;
     private float currentSteerAngle;
 
     public GameObject melonCanvas;
     public float motorForce;
     public float maxSteerAngle;
-    public HingeJoint steeringWheel;
-    public HingeJoint speedLever;
 
     public float maxValue;
     public float minValue;
@@ -27,9 +25,8 @@ public class KartMovement : MonoBehaviour
     public Transform rearLeftWheelTransform;
     public Transform rearRightWheelTransform;
 
-    public Transform steeringTransform;
 
-    bool shouldSlow;
+
     float temp;
     float temp1;
     float temp2;
@@ -45,7 +42,7 @@ public class KartMovement : MonoBehaviour
         temp1 = motorForce / 2;
         temp2 = motorForce / 4;
         temp3 = motorForce * 3;
-        verticalInput = 0;
+        direction = 0;
     }
 
     private void Update()
@@ -53,7 +50,8 @@ public class KartMovement : MonoBehaviour
         HandleMotor();
         Steer();
         UpdateWheels();
-        if (melonCanvas.activeSelf == true)
+
+        if (melonCanvas.activeSelf == true && Input.GetKey(KeyCode.Space))
         {
             acctime = 0f;
         }
@@ -99,35 +97,37 @@ public class KartMovement : MonoBehaviour
         }
         if (Input.GetKey("w"))
         {
-            //if (verticalInput < 0.02)
+            //if (direction < 0.02)
             //{
-            //    print(verticalInput);
-            //    verticalInput += 0.0001f;
+            //    print(direction);
+            //    direction += 0.0001f;
             //}
-            verticalInput = 0.01f;
+            direction = 1f;
         }
         if (Input.GetKey("s"))
         {
-            //if (verticalInput > -0.02)
+            //if (direction > -0.02)
             //{
-            //    print(verticalInput);
-            //    verticalInput -= 0.0001f;
+            //    print(direction);
+            //    direction -= 0.0001f;
             //}
-            verticalInput = -0.01f;
+            direction = -1f;
         }
         if (Input.GetKeyUp(KeyCode.UpArrow))
         {
-            if(motorForce < 10000)
+            if(motorForce < 100)
             {
                 motorForce *= 2;
+                temp = motorForce;
             }
             
         }
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
-            if (motorForce > 1000)
+            if (motorForce > 10)
             {
                 motorForce /= 2;
+                temp = motorForce;
             }
             
         }
@@ -137,8 +137,8 @@ public class KartMovement : MonoBehaviour
     private void HandleMotor()
     {
 
-        frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
-        frontRightWheelCollider.motorTorque = verticalInput * motorForce;
+        frontLeftWheelCollider.motorTorque = direction * motorForce;
+        frontRightWheelCollider.motorTorque = direction * motorForce;
     }
 
     private void Steer()
@@ -154,7 +154,7 @@ public class KartMovement : MonoBehaviour
     //{
     //    float leverNormal = Mathf.InverseLerp(-35, 35, speedLever.transform.localRotation.x);
     //    float leverRange = Mathf.Lerp(-1, 1, leverNormal);
-    //    verticalInput = leverRange;
+    //    direction = leverRange;
     //}
 
     private void UpdateWheels()
