@@ -90,7 +90,7 @@ public class KartMovement : MonoBehaviour
         {
             if (steeringRange > -1)
             {
-                steeringRange -= 0.005f;
+                steeringRange -= 0.004f;
             }
 
         }
@@ -98,7 +98,7 @@ public class KartMovement : MonoBehaviour
         {
             if (steeringRange < 1)
             {
-                steeringRange += 0.005f;
+                steeringRange += 0.004f;
             }
         }
         if (Input.GetKey("w"))
