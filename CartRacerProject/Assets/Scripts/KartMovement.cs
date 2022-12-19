@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class KartMovement : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class KartMovement : MonoBehaviour
     public GameObject melonCanvas;
     public float motorForce;
     public float maxSteerAngle;
+    public Text theText;
 
     public float maxValue;
     public float minValue;
@@ -58,6 +60,7 @@ public class KartMovement : MonoBehaviour
         if (slowtime < duration)
         {
             motorForce = temp2;
+            theText.text = "Motor Force: " + motorForce;
             slowtime += Time.deltaTime;
             
             if (slowtime >= duration)
@@ -65,12 +68,14 @@ public class KartMovement : MonoBehaviour
                 
                 //print(2);
                 motorForce = temp;
+                theText.text = "Motor Force: " + motorForce;
                 print(motorForce);
             }
         }
         if (acctime < duration)
         {
             motorForce = temp3;
+            theText.text = "Motor Force: " + motorForce;
             acctime += Time.deltaTime;
             //print(motorForce);
             if (acctime >= duration)
@@ -78,13 +83,19 @@ public class KartMovement : MonoBehaviour
                 //print(2);
                 print(motorForce);
                 motorForce = temp;
+                theText.text = "Motor Force: " + motorForce;
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+            {
+            Application.Quit();
+
         }
         if (Input.GetKey("a"))
         {
             if (steeringRange > -1)
             {
-                steeringRange -= 0.005f;
+                steeringRange -= 0.004f;
             }
 
         }
@@ -92,7 +103,7 @@ public class KartMovement : MonoBehaviour
         {
             if (steeringRange < 1)
             {
-                steeringRange += 0.005f;
+                steeringRange += 0.004f;
             }
         }
         if (Input.GetKey("w"))
@@ -118,6 +129,7 @@ public class KartMovement : MonoBehaviour
             if(motorForce < 100)
             {
                 motorForce *= 2;
+                theText.text = "Motor Force: " + motorForce;
                 temp = motorForce;
             }
             
@@ -127,6 +139,7 @@ public class KartMovement : MonoBehaviour
             if (motorForce > 10)
             {
                 motorForce /= 2;
+                theText.text = "Motor Force: " + motorForce;
                 temp = motorForce;
             }
             
