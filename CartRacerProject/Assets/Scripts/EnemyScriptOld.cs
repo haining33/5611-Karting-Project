@@ -13,7 +13,9 @@ public class EnemyScriptOld : MonoBehaviour
     private Transform location;
     private NavMeshAgent agent;
     private Stack locationList;
-
+    private float initSpeed;
+    private float stopTime;
+    private float stopTimeLimit;
     public void Awake()
     {
         locationList = new Stack();
@@ -22,6 +24,9 @@ public class EnemyScriptOld : MonoBehaviour
         locationList.Push(location3);
         agent = GetComponent<NavMeshAgent>();
         location = (Transform)locationList.Pop();
+        initSpeed = agent.speed;
+        stopTime = 0.0f;
+        stopTimeLimit = 2.0f;
     }
 
     private void Update()
@@ -30,6 +35,18 @@ public class EnemyScriptOld : MonoBehaviour
         Vector3 targetDirection = location.position - this.transform.position;
         float mag = targetDirection.magnitude;
         agent.destination = location.position;
+        //if the enemy kart hit the banana, the kart will stop;
+        if (cartStopped)
+        {
+            stopTime += Time.deltaTime;
+            agent.speed = 0;
+            if (stopTime > stopTimeLimit)
+            {
+                stopTime = 0;
+                cartStopped = false;
+                agent.speed = initSpeed;
+            }
+        }
         if (locationList.Count > 0 && mag < 2.0f)
         {
             location = (Transform)locationList.Pop();
