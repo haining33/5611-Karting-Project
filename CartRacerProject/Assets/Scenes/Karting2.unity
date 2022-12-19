@@ -3257,7 +3257,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Motor Force: 5000 '
+  m_Text: 'Motor Force: 50'
 --- !u!222 &1384355514
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5861,6 +5861,7 @@ MonoBehaviour:
   melonCanvas: {fileID: 12411571}
   motorForce: 50
   maxSteerAngle: 30
+  theText: {fileID: 1384355513}
   maxValue: 0.35
   minValue: -0.35
   frontLeftWheelCollider: {fileID: 8337410762132639928}
