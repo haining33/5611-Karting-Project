@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Karting.unity
     guid: 856add046ee0e5e4aa051a8a8ce25edd
+  - enabled: 1
+    path: Assets/Scenes/Karting2.unity
+    guid: a35e4a5b3ebdcdc459967c2ea5c420da
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260,
       type: 2}
