@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class KartMovement : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class KartMovement : MonoBehaviour
     public float maxSteerAngle;
     public HingeJoint steeringWheel;
     public HingeJoint speedLever;
+    public Text myText;
 
     public float maxValue;
     public float minValue;
@@ -53,6 +55,7 @@ public class KartMovement : MonoBehaviour
         HandleMotor();
         Steer();
         UpdateWheels();
+
         if (melonCanvas.activeSelf == true)
         {
             acctime = 0f;
@@ -60,6 +63,7 @@ public class KartMovement : MonoBehaviour
         if (slowtime < duration)
         {
             motorForce = temp2;
+            myText.text = "Motor Force: " + motorForce;
             slowtime += Time.deltaTime;
             
             if (slowtime >= duration)
@@ -67,19 +71,21 @@ public class KartMovement : MonoBehaviour
                 
                 //print(2);
                 motorForce = temp;
+                myText.text = "Motor Force: " + motorForce;
                 print(motorForce);
             }
         }
         if (acctime < duration)
         {
             motorForce = temp3;
+            myText.text = "Motor Force: " + motorForce;
             acctime += Time.deltaTime;
-            //print(motorForce);
             if (acctime >= duration)
             {
                 //print(2);
                 print(motorForce);
                 motorForce = temp;
+                myText.text = "Motor Force: " + motorForce;
             }
         }
         if (Input.GetKey("a"))
@@ -120,6 +126,7 @@ public class KartMovement : MonoBehaviour
             if(motorForce < 10000)
             {
                 motorForce *= 2;
+                myText.text = "Motor Force: " + motorForce;
             }
             
         }
@@ -128,6 +135,7 @@ public class KartMovement : MonoBehaviour
             if (motorForce > 1000)
             {
                 motorForce /= 2;
+                myText.text = "Motor Force: " + motorForce;
             }
             
         }
