@@ -433,6 +433,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyKart (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6542945660606318614, guid: 70c568a3caae5a74fa29e5b88e57ab52,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6542945660606318615, guid: 70c568a3caae5a74fa29e5b88e57ab52,
         type: 3}
       propertyPath: kartSpeed
