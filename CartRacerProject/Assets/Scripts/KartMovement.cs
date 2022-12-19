@@ -56,7 +56,7 @@ public class KartMovement : MonoBehaviour
         Steer();
         UpdateWheels();
 
-        if (melonCanvas.activeSelf == true)
+        if (melonCanvas.activeSelf == true && Input.GetKey(KeyCode.Space))
         {
             acctime = 0f;
         }
