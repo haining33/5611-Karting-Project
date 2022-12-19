@@ -86,6 +86,11 @@ public class KartMovement : MonoBehaviour
                 theText.text = "Motor Force: " + motorForce;
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+            {
+            Application.Quit();
+
+        }
         if (Input.GetKey("a"))
         {
             if (steeringRange > -1)
