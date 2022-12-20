@@ -30,7 +30,6 @@ public class KartMovement : MonoBehaviour
 
 
     float temp;
-    float temp1;
     float temp2;
     float temp3;
     float slowtime = Mathf.Infinity;
@@ -41,7 +40,6 @@ public class KartMovement : MonoBehaviour
     {
         KartBody = GameObject.FindGameObjectWithTag("MainCamera");
         temp = motorForce;
-        temp1 = motorForce / 2;
         temp2 = motorForce / 4;
         temp3 = motorForce * 3;
         direction = 0;
@@ -66,7 +64,6 @@ public class KartMovement : MonoBehaviour
             if (slowtime >= duration)
             {
                 
-                //print(2);
                 motorForce = temp;
                 theText.text = "Motor Force: " + motorForce;
                 print(motorForce);
@@ -77,10 +74,10 @@ public class KartMovement : MonoBehaviour
             motorForce = temp3;
             theText.text = "Motor Force: " + motorForce;
             acctime += Time.deltaTime;
-            //print(motorForce);
+
             if (acctime >= duration)
             {
-                //print(2);
+
                 print(motorForce);
                 motorForce = temp;
                 theText.text = "Motor Force: " + motorForce;
@@ -108,20 +105,12 @@ public class KartMovement : MonoBehaviour
         }
         if (Input.GetKey("w"))
         {
-            //if (direction < 0.02)
-            //{
-            //    print(direction);
-            //    direction += 0.0001f;
-            //}
+
             direction = 1f;
         }
         if (Input.GetKey("s"))
         {
-            //if (direction > -0.02)
-            //{
-            //    print(direction);
-            //    direction -= 0.0001f;
-            //}
+
             direction = -1f;
         }
         if (Input.GetKeyUp(KeyCode.UpArrow))
@@ -149,26 +138,17 @@ public class KartMovement : MonoBehaviour
 
     private void HandleMotor()
     {
-
         frontLeftWheelCollider.motorTorque = direction * motorForce;
         frontRightWheelCollider.motorTorque = direction * motorForce;
     }
 
     private void Steer()
     {
-        //float steeringNormal = Mathf.InverseLerp(minValue, maxValue, steeringWheel.transform.localRotation.x);
-        //steeringRange = Mathf.Lerp(1, -1, steeringNormal);
-
         currentSteerAngle = maxSteerAngle * steeringRange;
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }
-    //private void Lever()
-    //{
-    //    float leverNormal = Mathf.InverseLerp(-35, 35, speedLever.transform.localRotation.x);
-    //    float leverRange = Mathf.Lerp(-1, 1, leverNormal);
-    //    direction = leverRange;
-    //}
+
 
     private void UpdateWheels()
     {
